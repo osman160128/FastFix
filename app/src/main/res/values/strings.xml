@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FastFix</string>
+    <string name="app_name">FirstFix</string>
     <string name="title_activity_customer_map">CustomerMapActivity</string>
     <string name="drawer_close">Close Drawer</string>
     <string name="drawer_open">Open Drawer</string>
