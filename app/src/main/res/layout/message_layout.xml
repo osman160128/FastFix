@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/reciver_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="2dp"
+        />
+    <TextView
+        android:id="@+id/reciver_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reciver_image"
+        android:background="@drawable/reciver_massege_layout"
+        android:layout_toRightOf="@id/reciver_image"
+        android:textSize="15dp"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:id="@+id/sender_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/sender_massaege_layout"
+        android:text="reciver_image"
+        android:textSize="15dp"
+        android:padding="5dp"/>
+
+</RelativeLayout>

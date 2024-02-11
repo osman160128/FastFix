@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="ServiceManChat"
+            type="com.example.firstfix.serviceworker.ServiceWorkerChatActivity" />
+    </data>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".serviceworker.ServiceWorkerChatActivity"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/servicemanToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#A212CD"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/serviceManToolbarImg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/servicemanToolbarName"
+                android:layout_marginLeft="40dp"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recylerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/servicemanToolbar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageView
+            android:onClick="@{()->ServiceManChat.AcceptedButtonShow()}"
+            android:id="@+id/show_accept_button"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:src="@drawable/add_buttpn"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            />
+
+        <EditText
+            android:id="@+id/messagetxt"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/show_accept_button"
+            />
+        <ImageView
+            android:id="@+id/send_button"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:src="@drawable/sendbutton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            />
+
+    </RelativeLayout>
+</layout>
+

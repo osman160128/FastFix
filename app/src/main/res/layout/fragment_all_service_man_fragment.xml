@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="AllServiceItemCUstomer"
+            type="com.example.firstfix.customer.AllServiceitemFragment" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".customer.AllServiceitemFragment"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="#2FFF9800">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerDesktop()}"
+                    android:id="@+id/DextopFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Dextop Fix"
+                    android:textSize="20dp"
+                    android:background="#42B17086"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerLaptop()}"
+                    android:id="@+id/LaptopFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Laptop Fix"
+                    android:textSize="20dp"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerPhone()}"
+                    android:id="@+id/PhoneFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Phone Fix"
+                    android:textSize="20dp"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerPrintScanner()}"
+                    android:id="@+id/PrinterFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Printer/Sccaner Fix"
+                    android:textSize="20dp"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_gravity="center"
+            >
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerCar()}"
+                    android:id="@+id/CarFi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Car Fix"
+                    android:textSize="20dp"
+
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerBike()}"
+                    android:id="@+id/BikeFixer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Bike Fixer"
+                    android:textSize="20dp"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerAc()}"
+                    android:id="@+id/AcFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Ac Fix"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerGeyser()}"
+                    android:id="@+id/GyserFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Gyser Fix"
+                    android:textSize="20dp"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerFridge()}"
+                    android:id="@+id/FridgeFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Fridge Fix"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:onClick="@{()->AllServiceItemCUstomer.customerOven()}"
+                    android:id="@+id/OvenFix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Oven Fix"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:background="#42B17086"
+                    />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</layout>
