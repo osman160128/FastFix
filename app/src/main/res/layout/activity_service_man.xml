@@ -6,12 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".serviceworker.ServiceManActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/serviceman_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/service_man_toolbar"
+        android:background="#A212CD"
+        />
     <FrameLayout
         android:id="@+id/addServiceManMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Service Activity"
         />
+
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/service_man_fragment"
         android:layout_width="match_parent"

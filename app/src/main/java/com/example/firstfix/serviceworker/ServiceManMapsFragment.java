@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -93,9 +95,12 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
     CardView buttonAlartShow;
 
     boolean findCustomer = true;
-    public static String child = "child";
+    public static String child="";
     Marker userMarker;
+
+    public static FirebaseAuth mAuth;
     private ValueEventListener AssignedCustomerPickUpRefListner;
+    SharedPreferences sharedPreferences;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -109,11 +114,14 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
 
 
 
+        mAuth = FirebaseAuth.getInstance();
+
         //the driver available location is add this reference
         ServiceManAvabilityRef = FirebaseDatabase.getInstance().getReference("FastFix").child("Service man available").child(child);
         ServiceManWorkingRef = FirebaseDatabase.getInstance().getReference("FastFix").child("Service man working").child(child);
         UsersRef= FirebaseDatabase.getInstance().getReference("FastFix").child("Users");
         currentServiceManID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
         Bundle bundle = getArguments();
         if (bundle != null) {;
@@ -142,7 +150,7 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
                 }
                 else {
                     assignUserID="";
-
+                    binding.showAlertServiceManButton.setVisibility(View.INVISIBLE);
                     if(userMarker!=null){
                         userMarker.remove();
                     }
@@ -196,8 +204,8 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
             TextView textName = dialogView.findViewById(R.id.alart_dilog_sermiceman_name);
             ImageView imagePic = dialogView.findViewById(R.id.alart_dilog_sermicemanImg);
 
-            textName.setText("you pick up "+ userName + " work");
-
+            textName.setText("Name "+ userName);
+            binding.showAlertServiceMan.setText("you pick up" + userName +"  work");
             if (userImag != null) {
                 Picasso.get().load(userImag).into(imagePic);
             }
@@ -289,7 +297,7 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
 
                     serviceManLatLan= new LatLng(servicemanLocation.getLatitude(),servicemanLocation.getLongitude());
 
-                    mMap.addMarker(new MarkerOptions().position(serviceManLatLan).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.dirction)));
+                    mMap.addMarker(new MarkerOptions().position(serviceManLatLan).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.img_2)));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                     Findroutes();
 
@@ -340,29 +348,33 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
+
         //show the current location
-        lastLocation =location;
+                lastLocation = location;
 
-        LatLng latLng= new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Service Man Location"));
+                LatLng latLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Service Man Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.img_2)));
 
 
-        geoFireAvability = new GeoFire(ServiceManAvabilityRef);
-        geoFireWorking = new GeoFire(ServiceManWorkingRef);
+                geoFireAvability = new GeoFire(ServiceManAvabilityRef);
+                geoFireWorking = new GeoFire(ServiceManWorkingRef);
 
-        switch (assignUserID) {
-            case "":
-                geoFireWorking.removeLocation(currentServiceManID);
-                geoFireAvability.setLocation(currentServiceManID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
-                break;
-            default:
-                geoFireAvability.removeLocation(currentServiceManID);
-                geoFireWorking.setLocation(currentServiceManID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
-                break;
-          }
-        }
+                switch (assignUserID) {
+                    case "":
+                        geoFireWorking.removeLocation(currentServiceManID);
+                        geoFireAvability.setLocation(currentServiceManID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
+                        break;
+                    default:
+                        geoFireAvability.removeLocation(currentServiceManID);
+                        geoFireWorking.setLocation(currentServiceManID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
+                        break;
+
+            }
+    }
+
+
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -385,7 +397,7 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
                 .build();
         googleApiClient.connect();
     }
-
+//start below functions are show direction
     private void  Findroutes() {
 
         if(assignUserID!=null) {
@@ -437,7 +449,21 @@ public class ServiceManMapsFragment extends Fragment  implements OnMapReadyCallb
         Findroutes();
     }
 
+    //end  functions are show direction
 
     public  void buttonClick() {
     }
+
+    /*
+    @Override
+    public void onStop() {
+        super.onStop();
+        GeoFire geoFire = new GeoFire(ServiceManAvabilityRef);
+        geoFire.removeLocation(currentServiceManID);
+
+    }
+
+     */
+
+
 }

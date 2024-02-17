@@ -3,7 +3,9 @@ package com.example.firstfix.serviceworker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ public class AllRegisterServieManActivity extends AppCompatActivity {
 
     ActivityAllRegisterServieManBinding activityAllRegisterServieManBinding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,8 @@ public class AllRegisterServieManActivity extends AppCompatActivity {
         activityAllRegisterServieManBinding = DataBindingUtil.setContentView(this,R.layout.activity_all_register_servie_man);
 
         activityAllRegisterServieManBinding.setServiceItem(this);
+
+
 
 
     }

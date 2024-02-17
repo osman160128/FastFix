@@ -19,13 +19,16 @@ import android.bluetooth.BluetoothClass;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -261,8 +264,10 @@ public class CustomerMapsFragment extends Fragment implements OnMapReadyCallback
 
                       LatLng servicemanLocation = new LatLng(location2.getLatitude(), location2.getLongitude());
 
-                      serviceManMarker = mMap.addMarker(new MarkerOptions().position(servicemanLocation).
-                              title("Your service man location").icon(BitmapDescriptorFactory.fromResource(R.drawable.servicemanicon)));
+                      mMap.addMarker(new MarkerOptions()
+                              .position(servicemanLocation )
+                              .title("Service Man")
+                              .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_2)));
 
                   }
 
@@ -321,10 +326,6 @@ public class CustomerMapsFragment extends Fragment implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
         mMap.addMarker(new MarkerOptions().position(latLng).title("Customer Pick up Location"));
 
-        DatabaseReference CustomerAvabilityRef = FirebaseDatabase.getInstance().getReference("FastFix").child("Customer Available").child(child);
-        String currentCustomerUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        geoFire = new GeoFire(CustomerAvabilityRef);
-        geoFire.setLocation(currentCustomerUserID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
         if(receivedData==null){
 
             showALlNearestServiceMan(latLng);
@@ -369,9 +370,15 @@ public class CustomerMapsFragment extends Fragment implements OnMapReadyCallback
         }
         else{
 
-            DatabaseReference CustomerAvabilityRef = FirebaseDatabase.getInstance().getReference("FastFix").child("Customer Request").child(child);
+            DatabaseReference CustomerAvabilityRef = FirebaseDatabase.getInstance().getReference("FastFix").child("Customer Available").child(child);
             String currentCustomerUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
             geoFire = new GeoFire(CustomerAvabilityRef);
+
+            //if some one accept your request it will be remove from firebase
+            geoFire.setLocation(currentCustomerUserID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
+            DatabaseReference CustomerRequestAvabilityRef = FirebaseDatabase.getInstance().getReference("FastFix").child("Customer Request").child(child);
+
+            geoFire = new GeoFire(CustomerRequestAvabilityRef);
 
             geoFire.setLocation(currentCustomerUserID, new GeoLocation(lastLocation.getLatitude(), lastLocation.getLongitude()));
             usersLOcation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
@@ -472,9 +479,13 @@ public class CustomerMapsFragment extends Fragment implements OnMapReadyCallback
                             location2.setLongitude(ServniceManLatLan.longitude);
 
                            servicemanLocation = new LatLng(location2.getLatitude(),location2.getLongitude());
-                           if(mMap!=null){
-                               serviceManMarker = mMap.addMarker(new MarkerOptions().position(servicemanLocation).
-                                       title("Your service man location").icon(BitmapDescriptorFactory.fromResource(R.drawable.servicemanicon)));
+                           if(mMap!=null) {
+
+                               // Set the custom icon with the desired size
+                               mMap.addMarker(new MarkerOptions()
+                                       .position(servicemanLocation )
+                                       .title("Service Man").icon(BitmapDescriptorFactory.fromResource(R.drawable.img_2)));
+
                            }
 
 
@@ -573,85 +584,88 @@ public class CustomerMapsFragment extends Fragment implements OnMapReadyCallback
     public void ShowServiceManDataDIalogBox(){
 
 
-        DatabaseReference MessageRef = FirebaseDatabase.getInstance().getReference("FastFix");
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.alart_dialog_service_man,null);
+        if(receivedData!=null) {
+            DatabaseReference MessageRef = FirebaseDatabase.getInstance().getReference("FastFix");
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
+            View dialogView = getLayoutInflater().inflate(R.layout.alart_dialog_service_man, null);
 
-        TextView textName = dialogView.findViewById(R.id.alart_dilog_sermiceman_name);
-        ImageView imagePic = dialogView.findViewById(R.id.alart_dilog_sermicemanImg);
+            TextView textName = dialogView.findViewById(R.id.alart_dilog_sermiceman_name);
+            ImageView imagePic = dialogView.findViewById(R.id.alart_dilog_sermicemanImg);
 
-        textName.setText(reciverName+" picked your work");
+            textName.setText(reciverName + " picked your work");
 
-        if(reciverImage!=null){
-            Picasso.get().load(reciverImage).into(imagePic);
-        }
-        alertDialogBuilder.setPositiveButton("Finish",(dialogInterface ,which )->{
-
-            String messageSenderRef = "Messages /"+child+"/" + currentUserId ;
-            DatabaseReference userMessagesRef = MessageRef.child(messageSenderRef);
-            userMessagesRef.removeValue();
-
-            String messageReciveRef = "Messages /"+child+"/"  + receivedData  ;
-            DatabaseReference reciverMessagesRef = MessageRef.child(messageReciveRef );
-            reciverMessagesRef.removeValue();
-
-
-            DatabaseReference RequestAccptedRef = FirebaseDatabase.getInstance().getReference("FastFix").
-                    child("Working Accepted").child(receivedData);
-            RequestAccptedRef.removeValue();
-
-            binding.CallButton.setText("Call service man");
-            DatabaseReference usersLocationref = FirebaseDatabase.getInstance().getReference().child("FastFix").child("Customer Available").child(child).child(currentUserId);
-            usersLocationref.removeValue();
-
-           DatabaseReference getRefFromUsers  = FirebaseDatabase.getInstance().getReference("FastFix").child("Working Accepted").child(child);
-            getRefFromUsers.removeValue();
-
-            ServiceManWorkingRef.removeEventListener(ServiceManLocationRefListner);
-
-            receivedData =null;
-                 FragmentManager MapFragmentManager = getFragmentManager();
-            FragmentTransaction MapFragmentTransaction = MapFragmentManager.beginTransaction();
-
-            MapFragmentTransaction.replace(R.id.addCustomerMap,new AllServiceitemFragment());
-            MapFragmentTransaction.commit();
-
-
-        });
-
-        alertDialogBuilder.setNegativeButton("Cancel",(dialogInterface,which)->{
-
-            String messageSenderRef = "Messages /"+child+"/" + currentUserId ;
-            DatabaseReference userMessagesRef = MessageRef.child(messageSenderRef);
-
-            userMessagesRef.removeValue();
-
-            String messageReciveRef = "Messages /"+child+"/"  + receivedData  ;
-            DatabaseReference reciverMessagesRef = MessageRef.child(messageReciveRef );
-            reciverMessagesRef.removeValue();
-
-             DatabaseReference usersLocationref = FirebaseDatabase.getInstance().getReference().child("FastFix").child("Customer Available").child(child).child(currentUserId);
-             usersLocationref.removeValue();
-
-            DatabaseReference getRefFromUsers  = FirebaseDatabase.getInstance().getReference("FastFix").child("Working Accepted").child(child);
-            getRefFromUsers.removeValue();
-            ServiceManWorkingRef.removeEventListener(ServiceManLocationRefListner);
-
-            receivedData =null;
-
-        });
-
-        alertDialogBuilder.setView(dialogView);
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (alertDialog.isShowing()) {
-                    alertDialog.dismiss();
-                }
+            if (reciverImage != null) {
+                Picasso.get().load(reciverImage).into(imagePic);
             }
-        }, 4000);
+            alertDialogBuilder.setPositiveButton("Finish", (dialogInterface, which) -> {
+
+                String messageSenderRef = "Messages /" + child + "/" + currentUserId;
+                DatabaseReference userMessagesRef = MessageRef.child(messageSenderRef);
+                userMessagesRef.removeValue();
+
+                String messageReciveRef = "Messages /" + child + "/" + receivedData;
+                DatabaseReference reciverMessagesRef = MessageRef.child(messageReciveRef);
+                reciverMessagesRef.removeValue();
+
+
+                DatabaseReference RequestAccptedRef = FirebaseDatabase.getInstance().getReference("FastFix").
+                        child("Working Accepted").child(receivedData);
+                RequestAccptedRef.removeValue();
+
+                binding.CallButton.setText("Call service man");
+                DatabaseReference usersLocationref = FirebaseDatabase.getInstance().getReference().child("FastFix").child("Customer Available").child(child).child(currentUserId);
+                usersLocationref.removeValue();
+
+                DatabaseReference getRefFromUsers = FirebaseDatabase.getInstance().getReference("FastFix").child("Working Accepted").child(child);
+                getRefFromUsers.removeValue();
+
+                ServiceManWorkingRef.removeEventListener(ServiceManLocationRefListner);
+
+                receivedData = null;
+                FragmentManager MapFragmentManager = getFragmentManager();
+                FragmentTransaction MapFragmentTransaction = MapFragmentManager.beginTransaction();
+
+                MapFragmentTransaction.replace(R.id.addCustomerMap, new AllServiceitemFragment());
+                MapFragmentTransaction.commit();
+
+
+            });
+
+            alertDialogBuilder.setNegativeButton("Cancel", (dialogInterface, which) -> {
+
+                String messageSenderRef = "Messages /" + child + "/" + currentUserId;
+                DatabaseReference userMessagesRef = MessageRef.child(messageSenderRef);
+
+                userMessagesRef.removeValue();
+
+                String messageReciveRef = "Messages /" + child + "/" + receivedData;
+                DatabaseReference reciverMessagesRef = MessageRef.child(messageReciveRef);
+                reciverMessagesRef.removeValue();
+
+                DatabaseReference usersLocationref = FirebaseDatabase.getInstance().getReference().child("FastFix").child("Customer Available").child(child).child(currentUserId);
+                usersLocationref.removeValue();
+
+                DatabaseReference getRefFromUsers = FirebaseDatabase.getInstance().getReference("FastFix").child("Working Accepted").child(child);
+                getRefFromUsers.removeValue();
+                ServiceManWorkingRef.removeEventListener(ServiceManLocationRefListner);
+
+                receivedData = null;
+
+            });
+
+            alertDialogBuilder.setView(dialogView);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (alertDialog.isShowing()) {
+                        alertDialog.dismiss();
+                    }
+                }
+            }, 4000);
+
+        }
 
     }
 

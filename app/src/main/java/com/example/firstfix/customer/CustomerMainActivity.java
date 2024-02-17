@@ -8,7 +8,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.firstfix.MainActivity;
 import com.example.firstfix.R;
 import com.example.firstfix.UsersPrifileActivity;
 import com.example.firstfix.serviceworker.AllRegisterServieManActivity;
@@ -45,7 +48,7 @@ public class CustomerMainActivity extends AppCompatActivity {
 
     ImageView headerImg;
     TextView headerName;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,15 @@ public class CustomerMainActivity extends AppCompatActivity {
         CustomerFrameLayout = findViewById(R.id.addCustomerMap);
         CustomerNavigationView = findViewById(R.id.CustomerNavigationView);
 
+        //shered ference is used so that i open again it will open shared
+        //this section sget the save data when i entered app first time
+        sharedPreferences = getSharedPreferences("ServiceMan", Context.MODE_PRIVATE);
+        boolean isOpen = sharedPreferences.getBoolean("isOpen", false);
+
+        if(isOpen){
+            Intent DriverActivity = new Intent(CustomerMainActivity.this, AllRegisterServieManActivity.class);
+            startActivity(DriverActivity);
+        }
 
         View NviewHeader = CustomerNavigationView.getHeaderView(0);
         headerImg = NviewHeader.findViewById(R.id.customer_header_image);
@@ -105,6 +117,12 @@ public class CustomerMainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.RegistrationServiceMan){
+
+                    //shered ference is used so that i open again it will open shared
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isOpen", true);
+                    editor.apply();
+
                  Intent DriverActivity = new Intent(CustomerMainActivity.this, AllRegisterServieManActivity.class);
                  startActivity(DriverActivity);
                 }
@@ -113,6 +131,12 @@ public class CustomerMainActivity extends AppCompatActivity {
                     startActivity(DriverActivity);
                 } else if (item.getItemId()==R.id.userProfile) {
                     Intent profileActivity = new Intent(CustomerMainActivity.this, UsersPrifileActivity.class);
+                    startActivity(profileActivity);
+                }
+                else if (item.getItemId()==R.id.userSignOut) {
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    mAuth.signOut();
+                    Intent profileActivity = new Intent(CustomerMainActivity.this, MainActivity.class);
                     startActivity(profileActivity);
                 }
                 return true;
