@@ -1,21 +1,20 @@
-Why FastFix?
 FastFix revolutionizes the traditional service delivery model by providing a seamless platform for customers and service providers to connect and collaborate efficiently. With its intuitive design and robust features, FastFix simplifies the process of getting things fixed, enhancing convenience for users and empowering service providers.
 I contributed to the development of FastFix, focusing on frontend and backend functionalities, database integration, and API utilization. My responsibilities included designing user interfaces, implementing features, and ensuring smooth communication between the app and Firebase backend.
 
-Dual Interface: Customers and service providers interact through separate interfaces tailored to their respective needs.
-Service Variety: Customers can request services for devices like laptops, desktops, cars, bikes, and household appliances such as geysers and refrigerators.
-Real-time Notifications: Service providers receive instant notifications upon customer requests, ensuring swift response times.
-Request Management: Service providers can accept or cancel service requests based on their availability and expertise.
-Integration: Leveraging Google APIs, including Cloud Messaging API and Direction API, enhances functionality and efficiency.
-Rating System: Implement a rating and review system to enhance transparency and trust between customers and service providers.
-Geolocation Integration: Integrate geolocation services to optimize service provider allocation and enhance user experience.
-Advanced Analytics: Incorporate analytics to track service performance, user engagement, and other key metrics for informed decision-making
+Dual Interface: Customers and service providers interact through separate interfaces tailored to their respective needs.<br>
+Service Variety: Customers can request services for devices like laptops, desktops, cars, bikes, and household appliances such as geysers and refrigerators.<br>
+Real-time Notifications: Service providers receive instant notifications upon customer requests, ensuring swift response times.<br>
+Request Management: Service providers can accept or cancel service requests based on their availability and expertise.<br>
+Integration: Leveraging Google APIs, including Cloud Messaging API and Direction API, enhances functionality and efficiency.<br>
+Rating System: Implement a rating and review system to enhance transparency and trust between customers and service providers.<br>
+Geolocation Integration: Integrate geolocation services to optimize service provider allocation and enhance user experience.<br>
+Advanced Analytics: Incorporate analytics to track service performance, user engagement, and other key metrics for informed decision-making<br>
 
 Technology Stack:
 Android Development: Java, XML
 Backend: PHP
 Database: Firebase
-APIs: Google Cloud Messaging API, Google Direction API
+APIs: Google Cloud Messaging API, Google Direction API,Google Map API
 
 ![Weixin Image_20240324194248](https://github.com/osman160128/FastFix/assets/140810457/9c71c928-be66-4d2d-a8f7-d9858731464e)
 ![Weixin Image_20240324194509](https://github.com/osman160128/FastFix/assets/140810457/b69caca0-c13b-4f6c-82df-5a26d2c634d1)
